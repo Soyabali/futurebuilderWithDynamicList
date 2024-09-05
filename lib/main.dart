@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'data/leaveRepo.dart';
 import 'model/LeaveData.dart';
 
-void main(){
+void main() {
   runApp(const Mypp());
 }
 
@@ -14,11 +15,10 @@ class Mypp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-         home: LeaveScreen(),
+      home: LeaveScreen(),
     );
   }
 }
-
 
 class LeaveScreen extends StatefulWidget {
   @override
@@ -27,6 +27,13 @@ class LeaveScreen extends StatefulWidget {
 
 class _LeaveScreenState extends State<LeaveScreen> {
   late Future<List<LeaveData>> futureLeaveData;
+  Color? containerColor;
+  Color? textColor;
+  List<dynamic>?  getgetYtdMonth;
+  List<dynamic>?  hrmsLeaveBalanceV2;
+  var sLvDescTitle;
+  var dDate;
+  var sLvDesc;
 
   @override
   void initState() {
@@ -39,12 +46,51 @@ class _LeaveScreenState extends State<LeaveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Leave Balance'),
+        // statusBarColore
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          // Status bar color  // 2a697b
+          statusBarColor: Color(0xFF2a697b),
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),
+        // backgroundColor: Colors.blu
+        backgroundColor: Color(0xFF0098a6),
+        leading: InkWell(
+          onTap: () {
+            // Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const DashBoard()),
+            // );
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            'Apply Leave',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.normal,
+              fontFamily: 'Montserrat',
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ), // Removes shadow under the AppBar
       ),
-
       body: FutureBuilder<List<LeaveData>>(
         future: futureLeaveData,
         builder: (context, snapshot) {
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -56,6 +102,20 @@ class _LeaveScreenState extends State<LeaveScreen> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 LeaveData leaveData = snapshot.data![index];
+                sLvDesc = leaveData.sLvDesc;
+                sLvDescTitle = (sLvDesc=="Leave Without Pay")? "Note:-Salary will be deducated for this leave.":"";
+                containerColor;
+                textColor;
+                var note;
+                if(sLvDesc =="Leave Without Pay"){
+                  containerColor = Colors.redAccent;
+                  textColor = Colors.redAccent;
+                  // note="Note : Salary will be deducated for this leave ."
+                }else{
+                  containerColor = Color(0xFF0098a6);
+                  textColor = Colors.black;
+                }
+
                 return Card(
                   margin: EdgeInsets.all(8.0),
                   elevation: 4.0,
@@ -65,32 +125,64 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Top Container with LeaveType and Description
-                        Container(
-                          height: 50,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                leaveData.sLvDesc,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start, // Align items to the start of the row
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 56, // Height of the first container
+                              width: MediaQuery.of(context).size.width-50, // Width of the first container
+                              decoration: BoxDecoration(
+                                color: Color(0xFFD3D3D3), // Background color of the first container
+                                borderRadius: BorderRadius.circular(0), // Border radius
+                                border: const Border(
+                                  left: BorderSide(
+                                    color: Colors.green, // Color of the left border
+                                    width: 5.0, // Width of the left border
+                                  ),
                                 ),
                               ),
-                              Text(
-                                leaveData.sLvTypeCode,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Leave Type',
+                                          style: TextStyle(
+                                              color: Color(0xFF0098a6),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.normal
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          leaveData.sLvDesc,
+                                          //'${hrmsLeaveBalaceV2List?[index].sLvDesc}',
+                                          style: TextStyle(
+                                              color: textColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.normal
+                                          ),
+                                        ),
+
+
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+
+                            )
+                          ],
                         ),
 
                         SizedBox(height: 16.0),
-
                         // Row with 5 equal Columns
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
