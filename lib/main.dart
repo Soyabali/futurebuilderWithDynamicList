@@ -186,16 +186,125 @@ class _LeaveScreenState extends State<LeaveScreen> {
                         SizedBox(height: 16.0),
                         // Row with 5 equal Columns
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            buildColumn('Opening', leaveData.fOpeningBal),
-                            buildColumn('Entitlement', leaveData.fEntitlement),
-                            buildColumn('Availed', leaveData.fAvailed),
-                            buildColumn('Closing', leaveData.fClosingBalance),
-                            buildColumn('YTD', leaveData.fYTD),
+                            Column(
+                              children: [
+                                Material(
+                                  elevation: 5, // Elevation of the container
+                                  borderRadius: BorderRadius.circular(20), // Border radius
+                                  child: Container(
+                                    height: 40, // Height of the container
+                                    width: 40, // Width of the container
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, // Background color of the container
+                                      border: Border.all(color: Colors.grey, width: 1), // Outer border color and width
+                                      borderRadius: BorderRadius.circular(20), // Border radius
+                                    ),
+                                    alignment: Alignment.center, // Center the text within the container
+                                    child:Text(
+                                      leaveData.fOpeningBal,
+                                      //'${hrmsLeaveBalaceV2List?[index].fOpeningBal}', // The text to display
+                                      style: TextStyle(
+                                        color: Colors.grey, // Text color
+                                        fontSize: 16, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Opening', // The text to display
+                                  style: TextStyle(
+                                    color: Colors.black, // Text color
+                                    fontSize: 16, // Text size
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Material(
+                                  elevation: 5, // Elevation of the container
+                                  borderRadius: BorderRadius.circular(20), // Border radius
+                                  child: Container(
+                                    height: 40, // Height of the container
+                                    width: 40, // Width of the container
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, // Background color of the container
+                                      border: Border.all(color: Colors.grey, width: 1), // Outer border color and width
+                                      borderRadius: BorderRadius.circular(20), // Border radius
+                                    ),
+                                    alignment: Alignment.center, // Center the text within the container
+                                    child: Text(
+                                      leaveData.fEntitlement,
+                                      //temple.fEntitlement, // The text to display
+                                      style: TextStyle(
+                                        color: Colors.grey, // Text color
+                                        fontSize: 16, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Entitlement', // The text to display
+                                  style: TextStyle(
+                                    color: Colors.black, // Text color
+                                    fontSize: 16, // Text size
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Material(
+                                  elevation: 5, // Elevation of the container
+                                  borderRadius: BorderRadius.circular(20), // Border radius
+                                  child: Container(
+                                    height: 40, // Height of the container
+                                    width: 40, // Width of the container
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, // Background color of the container
+                                      border: Border.all(color: Colors.grey, width: 1), // Outer border color and width
+                                      borderRadius: BorderRadius.circular(20), // Border radius
+                                    ),
+                                    alignment: Alignment.center, // Center the text within the container
+                                    child: Text(
+                                      leaveData.fAvailed, // The text to display
+                                      style: TextStyle(
+                                        color: Colors.grey, // Text color
+                                        fontSize: 16, // Text size
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Availed', // The text to display
+                                  style: TextStyle(
+                                    color: Colors.black, // Text color
+                                    fontSize: 16, // Text size
+                                  ),
+                                ),
+                              ],
+                            ),
+                            
+
+
                           ],
                         ),
 
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     buildColumn('Opening', leaveData.fOpeningBal),
+                        //     buildColumn('Entitlement', leaveData.fEntitlement),
+                        //     buildColumn('Availed', leaveData.fAvailed),
+                        //     buildColumn('Closing', leaveData.fClosingBalance),
+                        //     buildColumn('YTD', leaveData.fYTD),
+                        //   ],
+                        // ),
                         SizedBox(height: 16.0),
 
                         // ElevatedButton at the end of the Card
